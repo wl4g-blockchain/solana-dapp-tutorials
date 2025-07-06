@@ -1,7 +1,6 @@
-// @ts-nocheck
 import * as anchor from '@coral-xyz/anchor'
 import { Program } from '@coral-xyz/anchor'
-import { Keypair, PublicKey } from '@solana/web3.js'
+import { /*Keypair,*/ PublicKey } from '@solana/web3.js'
 import { Voting } from '../target/types/voting'
 import { startAnchor } from 'solana-bankrun'
 import { BankrunProvider } from 'anchor-bankrun'
@@ -14,7 +13,7 @@ const votingAddress = new PublicKey('41dehd3qKW3ongna3tHSCcVfzhQhDPDyF2TsFMmCXXV
 describe('Voting', () => {
   let context
   let provider
-  let votingProgram
+  let votingProgram: Program<Voting>
 
   beforeAll(async () => {
     context = await startAnchor('', [{ name: 'voting', programId: votingAddress }], [])

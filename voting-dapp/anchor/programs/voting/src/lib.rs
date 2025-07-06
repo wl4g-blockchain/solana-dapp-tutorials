@@ -52,7 +52,14 @@ pub struct InitializePoll<'info> {
     #[account(mut)]
     pub signer: Signer<'info>,
 
-    #[account(init, payer = signer, space = 8 + Poll::INIT_SPACE, seeds = [poll_id.to_le_bytes().as_ref()], bump)]
+    #[account(
+        init, 
+        payer = signer,
+        space = 8 + Poll::INIT_SPACE,
+        // 每个账户类型的属性都需根据 seeds 派生出公钥地址, 即 PDA
+        seeds = [poll_id.to_le_bytes().as_ref()],
+        bump
+    )]
     pub poll: Account<'info, Poll>,
 
     pub system_program: Program<'info, System>,
@@ -86,6 +93,7 @@ pub struct InitializeCandidate<'info> {
         init,
         payer = signer,
         space = 8 + Candidate::INIT_SPACE,
+        // 每个账户类型的属性都需根据 seeds 派生出公钥地址, 即 PDA
         seeds = [poll_id.to_le_bytes().as_ref(), candidate_name.as_bytes()],
         bump
     )]
@@ -108,6 +116,7 @@ pub struct Vote<'info> {
     pub signer: Signer<'info>,
 
     #[account(
+        // 每个账户类型的属性都需根据 seeds 派生出公钥地址, 即 PDA
         seeds = [poll_id.to_le_bytes().as_ref()],
         bump
     )]
@@ -115,6 +124,7 @@ pub struct Vote<'info> {
 
     #[account(
         mut,
+        // 每个账户类型的属性都需根据 seeds 派生出公钥地址, 即 PDA
         seeds = [poll_id.to_le_bytes().as_ref(), candidate_name.as_bytes()], 
         bump
     )]
